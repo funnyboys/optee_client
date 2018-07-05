@@ -481,10 +481,13 @@ TEEC_Result TEEC_OpenSession(TEEC_Context *ctx, TEEC_Session *session,
 			uint32_t connection_method, const void *connection_data,
 			TEEC_Operation *operation, uint32_t *ret_origin)
 {
+    /* 创建一个buffer，用于存放open_session时的参数和payload */
 	uint64_t buf[(sizeof(struct tee_ioctl_open_session_arg) +
 			TEEC_CONFIG_PAYLOAD_REF_COUNT *
 				sizeof(struct tee_ioctl_param)) /
 			sizeof(uint64_t)] = { 0 };
+
+    /* ioctl结构体参数指针 */
 	struct tee_ioctl_buf_data buf_data;
 	struct tee_ioctl_open_session_arg *arg;
 	struct tee_ioctl_param *params;
